@@ -11,6 +11,8 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import java.awt.print.Book;
+
 @Component
 public class DataLoader implements ApplicationRunner {
 
@@ -35,6 +37,9 @@ public class DataLoader implements ApplicationRunner {
         Course course3 = new Course("Spring Intermediate", "Perth",4 );
         courseRepository.save(course3);
 
+        Course course4 = new Course("Advanced Python", "Edinburgh", 2);
+        courseRepository.save(course4);
+
         Customer customer1 = new Customer("Gavin", "Glasgow", 38);
         customerRepository.save(customer1);
 
@@ -55,6 +60,9 @@ public class DataLoader implements ApplicationRunner {
 
         Booking booking4 = new Booking("20-01-15", course2, customer1);
         bookingRepository.save(booking4);
+
+        Booking booking5 = new Booking("20-02-21", course4, customer3);
+        bookingRepository.save(booking5);
 
     }
 }
