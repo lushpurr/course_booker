@@ -1,5 +1,6 @@
 package com.example.coursebooking.controllers;
 
+import com.example.coursebooking.models.Course;
 import com.example.coursebooking.models.Customer;
 import com.example.coursebooking.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,13 @@ public class CustomerController {
     CustomerRepository customerRepository;
 
     @GetMapping(value = "/customers")
-    public ResponseEntity<List<Customer>> getAllCustomers(){
+    public ResponseEntity getAllCustomersAndFilters(
+            @RequestParam(required = false, name="courseName")String courseName)
+    {
+        if (courseName != null){
+            List<Customer> foundCustomers = customerRepository.findByBookingsCourseName(courseName);
+            return new ResponseEntity(foundCustomers, HttpStatus.OK);
+        }
         return new ResponseEntity<>(customerRepository.findAll(), HttpStatus.OK);
     }
 

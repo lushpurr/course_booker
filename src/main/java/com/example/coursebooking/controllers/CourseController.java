@@ -17,7 +17,18 @@ public class CourseController {
     CourseRepository courseRepository;
 
     @GetMapping(value = "/courses")
-    public ResponseEntity<List<Course>> getAllCourses(){
+    public ResponseEntity<List<Course>> getAllCoursesAndFilters(
+            @RequestParam(required = false, name="starRating")Integer starRating,
+            @RequestParam(required = false, name="customerName")String customerName
+    ){
+        if (starRating != null){
+            List<Course> foundCourses = courseRepository.findByStarRating(starRating);
+            return new ResponseEntity(foundCourses, HttpStatus.OK);
+        }
+        if (customerName != null){
+            List<Course> foundCourses = courseRepository.findByBookingsCustomerName(customerName);
+            return new ResponseEntity(foundCourses, HttpStatus.OK);
+        }
         return new ResponseEntity<>(courseRepository.findAll(), HttpStatus.OK);
     }
 
